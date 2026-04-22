@@ -3,188 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Church Music</title>
+    <title>Music & Livestreams | Rock Church Music</title>
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
     <div class="site-header">
-        <a href="../index.html" class="logo-link">
-            <img src="../images/RockLogo.png" class="logo" alt="Rock Church Music Logo">
-        </a>
+        <div class="header-left">
+            <a href="../index.html" class="logo-link">
+                <img src="../images/RockLogo.png" class="logo" alt="Rock Church Music Logo">
+            </a>
 
-        <div class="header-text">
-            <h1>Homepage</h1>
-            <p>Rock Church Music</p>
-        </div>
-    </div>
-
-    <div class="page">
-        <div class="leftside">
-            <div class="setlist-card">
-                <h2>This Week's Setlist</h2>
-
-                <div class="playlist">
-
-                    <div class="song" data-src="../audio/Happy Day FL 4-12-26.mp3" onclick="playSong(this)">
-                        <button class="play-btn">▶</button>
-
-                        <div class="song-info">
-                            <div class="song-title">Happy Day</div>
-                            <div class="song-artist">Hillsong</div>
-                        </div>
-
-                        <div class="playing-indicator">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                        <div class="song-time">--:--</div>
-                    </div>
-
-                    <div class="song" data-src="../audio/I Believe FL 4-21-26.mp3" onclick="playSong(this)">
-                        <button class="play-btn">▶</button>
-
-                        <div class="song-info">
-                            <div class="song-title">I Believe</div>
-                            <div class="song-artist">Phil Wickham</div>
-                        </div>
-
-                        <div class="playing-indicator">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                        <div class="song-time">--:--</div>
-                    </div>
-
-                    <div class="song" data-src="../audio/Whatever May Come FL 4-21-26.mp3" onclick="playSong(this)">
-                        <button class="play-btn">▶</button>
-
-                        <div class="song-info">
-                            <div class="song-title">Whatever May Come</div>
-                            <div class="song-artist">Jeremy Camp</div>
-                        </div>
-
-                        <div class="playing-indicator">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                        <div class="song-time">--:--</div>
-                    </div>
-
-                    <div class="song" data-src="../audio/Cant Stop Praising FL 4-21-26.mp3" onclick="playSong(this)">
-                        <button class="play-btn">▶</button>
-
-                        <div class="song-info">
-                            <div class="song-title">Cant Stop Praising</div>
-                            <div class="song-artist">Dave</div>
-                        </div>
-
-                        <div class="playing-indicator">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                        <div class="song-time">--:--</div>
-                    </div>
-
-                </div>
-
-                <audio id="audioPlayer" controls></audio>
-
-                <div class="library-link-wrap">
-                    <span class="library-label">Browse the complete song catalog</span>
-                    <a class="library-button" href="./SongLibrarby.html">Open Full Song Library</a>
-                </div>
+            <div class="header-text">
+                <p>Rock Church Music</p>
             </div>
         </div>
 
-        <div class="rightside">
-            <h2>Last Week's Service</h2>
-            <video controls>
-                <source src="../videos/4-19.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
+        <nav class="top-nav">
+            <a href="./whoarewe.html" class="nav-link">Who Are We?</a>
+            <a href="./whatwebelieve.html" class="nav-link">What We Believe</a>
+            <a href="./pastsermons.html" class="nav-link">Past Sermons</a>
+            <a href="./calendar.html" class="nav-link active">Calendar</a>
+            <a href="./donate.html" class="nav-link">Donate</a>
+            <a href="./more.html" class="nav-link">More</a>
+            <a href="./rockmusic.html" class="nav-link">Music & Livestreams</a>
+        </nav>
     </div>
-
-    <script>
-        const player = document.getElementById("audioPlayer");
-        let currentSong = null;
-
-        function playSong(clickedSong) {
-            const file = clickedSong.getAttribute("data-src");
-
-            if (currentSong === clickedSong && !player.paused) {
-                player.pause();
-                clickedSong.classList.remove("active", "playing");
-                clickedSong.querySelector(".play-btn").textContent = "▶";
-                return;
-            }
-
-            player.src = file;
-            player.play();
-
-            document.querySelectorAll(".song").forEach(song => {
-                song.classList.remove("active", "playing");
-                song.querySelector(".play-btn").textContent = "▶";
-            });
-
-            clickedSong.classList.add("active", "playing");
-            clickedSong.querySelector(".play-btn").textContent = "❚❚";
-            currentSong = clickedSong;
-        }
-
-        player.addEventListener("pause", function () {
-            if (currentSong) {
-                currentSong.classList.remove("playing");
-                currentSong.querySelector(".play-btn").textContent = "▶";
-            }
-        });
-
-        player.addEventListener("play", function () {
-            if (currentSong) {
-                currentSong.classList.add("playing");
-                currentSong.querySelector(".play-btn").textContent = "❚❚";
-            }
-        });
-
-        player.addEventListener("ended", function () {
-            if (currentSong) {
-                currentSong.classList.remove("active", "playing");
-                currentSong.querySelector(".play-btn").textContent = "▶";
-                currentSong = null;
-            }
-        });
-
-        function formatTime(seconds) {
-            const minutes = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${minutes}:${secs.toString().padStart(2, "0")}`;
-        }
-
-        document.querySelectorAll(".song").forEach(song => {
-            const file = song.getAttribute("data-src");
-            const timeBox = song.querySelector(".song-time");
-            const tempAudio = new Audio(file);
-
-            tempAudio.addEventListener("loadedmetadata", function () {
-                timeBox.textContent = formatTime(tempAudio.duration);
-            });
-
-            tempAudio.addEventListener("error", function () {
-                timeBox.textContent = "0:00";
-            });
-        });
-    </script>
-</body>
-</html>
