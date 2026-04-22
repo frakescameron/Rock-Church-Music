@@ -1,0 +1,257 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: white;
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.82)),
+    url("./images/musicdrop.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 24px 30px 10px;
+}
+
+.logo-link {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.logo-link:hover {
+  transform: scale(1.05);
+}
+
+.logo {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.header-text h1 {
+  margin: 0;
+  font-size: 3rem;
+}
+
+.header-text p {
+  margin: 6px 0 0;
+  color: #d0d0d0;
+  font-size: 1rem;
+}
+
+.page {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 20px 30px 40px;
+}
+
+.leftside {
+  flex: 0 0 380px;
+}
+
+.rightside {
+  flex: 1;
+}
+
+.rightside h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 2rem;
+}
+
+.rightside video {
+  width: 100%;
+  height: auto;
+  max-height: 900px;
+  border-radius: 16px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+}
+
+.setlist-card {
+  background: rgba(0, 0, 0, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.setlist-card h2 {
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-size: 2rem;
+}
+
+.playlist {
+  margin-top: 15px;
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: rgba(18, 18, 18, 0.92);
+}
+
+.song {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #222;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.song:hover {
+  background-color: rgba(40, 40, 40, 0.9);
+}
+
+.song.active {
+  background-color: rgba(58, 58, 58, 0.9);
+}
+
+.play-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  width: 18px;
+  flex-shrink: 0;
+}
+
+.song-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.song-title {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.song-artist {
+  font-size: 0.9rem;
+  color: #b3b3b3;
+  margin-top: 3px;
+}
+
+.playing-indicator {
+  width: 22px;
+  height: 18px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+.playing-indicator span {
+  width: 3px;
+  height: 6px;
+  background: #1ed760;
+  border-radius: 999px;
+  transform-origin: bottom;
+}
+
+.song.playing .playing-indicator {
+  opacity: 1;
+}
+
+.song.playing .playing-indicator span:nth-child(1) {
+  animation: bounceBars 0.9s ease-in-out infinite;
+}
+
+.song.playing .playing-indicator span:nth-child(2) {
+  animation: bounceBars 0.7s ease-in-out infinite 0.1s;
+}
+
+.song.playing .playing-indicator span:nth-child(3) {
+  animation: bounceBars 1s ease-in-out infinite 0.2s;
+}
+
+.song.playing .playing-indicator span:nth-child(4) {
+  animation: bounceBars 0.8s ease-in-out infinite 0.15s;
+}
+
+@keyframes bounceBars {
+  0%   { height: 5px; }
+  25%  { height: 16px; }
+  50%  { height: 9px; }
+  75%  { height: 14px; }
+  100% { height: 6px; }
+}
+
+.song-time {
+  width: 45px;
+  text-align: right;
+  color: #b3b3b3;
+  flex-shrink: 0;
+}
+
+#audioPlayer {
+  width: 100%;
+  margin-top: 16px;
+  border-radius: 999px;
+}
+
+.library-link-wrap {
+  margin-top: 20px;
+}
+
+.library-label {
+  display: block;
+  font-size: 0.95rem;
+  color: #cfcfcf;
+  margin-bottom: 10px;
+}
+
+.library-button {
+  display: inline-block;
+  background: linear-gradient(135deg, #7c3aed, #5b21b6);
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 12px 18px;
+  border-radius: 12px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  box-shadow: 0 8px 20px rgba(91, 33, 182, 0.35);
+}
+
+.library-button:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+@media (max-width: 1100px) {
+  .page {
+    flex-direction: column;
+  }
+
+  .leftside,
+  .rightside {
+    width: 100%;
+    flex: none;
+  }
+
+  .header-text h1 {
+    font-size: 2.3rem;
+  }
+
+  .setlist-card h2,
+  .rightside h2 {
+    font-size: 1.6rem;
+  }
+}
