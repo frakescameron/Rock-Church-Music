@@ -1982,3 +1982,21 @@ body {
     max-height: 420px;
   }
 }
+
+.song-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #ccc;
+  background: rgba(0,0,0,0.6);
+  z-index: 2;
+}
+
+.song-youtube-wrap iframe {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}

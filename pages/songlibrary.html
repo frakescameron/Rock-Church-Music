@@ -42,8 +42,8 @@
         <section class="song-library-layout">
 
             <div class="song-player-card">
-                <h2 id="activeSongTitle">Happy Day</h2>
-                <p id="activeSongArtist" class="song-player-meta">Hillsong</p>
+                <h2 id="activeSongTitle"></h2>
+                <p id="activeSongArtist" class="song-player-meta"></p>
 
                <div class="song-youtube-wrap" id="playerWrap">
                     <div class="song-placeholder" id="songPlaceholder">
@@ -186,15 +186,19 @@
         const search = document.getElementById("songSearch");
 
         songs.forEach(song => {
-            song.addEventListener("click", () => {
-                songs.forEach(s => s.classList.remove("active"));
-                song.classList.add("active");
+  song.addEventListener("click", () => {
+    songs.forEach(s => s.classList.remove("active"));
+    song.classList.add("active");
 
-                title.textContent = song.dataset.title;
-                artist.textContent = song.dataset.artist;
-                player.src = `https://www.youtube.com/embed/${song.dataset.video}`;
-            });
-        });
+    title.textContent = song.dataset.title;
+    artist.textContent = song.dataset.artist;
+
+    player.src = `https://www.youtube.com/embed/${song.dataset.video}?autoplay=1`;
+
+    document.getElementById("songPlaceholder").style.display = "none";
+    player.style.opacity = "1";
+  });
+});
 
         search.addEventListener("input", () => {
             const searchText = search.value.toLowerCase();
