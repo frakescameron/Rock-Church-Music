@@ -512,3 +512,254 @@ body {
     font-size: 1.6rem;
   }
 }
+
+.who-main {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 30px 30px 60px;
+}
+
+.section-kicker {
+  margin: 0 0 10px;
+  color: #d6c1ff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.who-hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 32px;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.40);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  margin-bottom: 30px;
+}
+
+.who-hero-text h1 {
+  margin: 0 0 16px;
+  font-size: 3.2rem;
+  line-height: 1.1;
+}
+
+.who-lead {
+  color: #f1f1f1;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  max-width: 700px;
+  margin-bottom: 24px;
+}
+
+.who-hero-image-wrap {
+  width: 100%;
+}
+
+.who-hero-image {
+  width: 100%;
+  height: 100%;
+  max-height: 460px;
+  object-fit: cover;
+  border-radius: 22px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+}
+
+.who-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.who-card {
+  background: rgba(0, 0, 0, 0.40);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.who-card h2 {
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-size: 2rem;
+}
+
+.who-card p {
+  color: #efefef;
+  line-height: 1.8;
+  font-size: 1.05rem;
+  margin-bottom: 14px;
+}
+
+.who-points {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.who-point {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-weight: 600;
+  color: #f3f3f3;
+}
+
+.pastor-section {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 32px;
+  align-items: stretch;
+  background: rgba(0, 0, 0, 0.40);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  margin-bottom: 30px;
+}
+
+.family-image-wrap
+{
+  width: 80%;
+  margin: -30px auto 0;
+}
+
+.pastor-image-wrap {
+  width: 100%;
+}
+
+.pastor-image {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+}
+
+.pastor-content h2 {
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-size: 2.3rem;
+}
+
+.pastor-content p {
+  color: #efefef;
+  line-height: 1.8;
+  font-size: 1.05rem;
+  margin-bottom: 14px;
+}
+
+.who-banner-card {
+  margin-bottom: 30px;
+  border-radius: 24px;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.28)),
+    url("../images/prayer.jpg");
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+
+
+.who-banner-overlay {
+  padding: 48px 36px;
+  background: transparent;
+}
+
+.who-banner-overlay h2 {
+  margin: 0 0 14px;
+  font-size: 2.4rem;
+}
+
+.who-banner-overlay p {
+  max-width: 760px;
+  color: #f3f3f3;
+  line-height: 1.8;
+  font-size: 1.08rem;
+  margin: 0;
+}
+
+.who-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.who-cta {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.40);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 24px;
+  padding: 40px 28px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.who-cta h2 {
+  margin-top: 0;
+  margin-bottom: 14px;
+  font-size: 2.4rem;
+}
+
+.who-cta p {
+  color: #efefef;
+  font-size: 1.08rem;
+  line-height: 1.8;
+  max-width: 760px;
+  margin: 0 auto 24px;
+}
+
+.who-cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.secondary-button {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.secondary-button:hover {
+  background: rgba(255, 255, 255, 0.14);
+  opacity: 1;
+}
+
+@media (max-width: 1200px) {
+  .who-hero,
+  .who-grid,
+  .pastor-section,
+  .who-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .who-hero-text h1 {
+    font-size: 2.5rem;
+  }
+
+  .pastor-content h2,
+  .who-banner-overlay h2,
+  .who-cta h2,
+  .who-card h2 {
+    font-size: 1.8rem;
+  }
+
+  .who-points {
+    grid-template-columns: 1fr;
+  }
+}
