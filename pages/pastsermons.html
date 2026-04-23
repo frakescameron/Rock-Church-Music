@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music & Livestreams | Rock Church Music</title>
+    <title>The Rock Church</title>
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
     <div class="site-header">
         <div class="header-left">
             <a href="../index.html" class="logo-link">
-                <img src="../images/RockLogo.png" class="logo" alt="Rock Church Music Logo">
+                <img src="../images/RockLogo.png" class="logo" alt="Rock Church Logo">
             </a>
 
             <div class="header-text">
-                <p>Rock Church Music</p>
+                <p>The Rock Church</p>
             </div>
         </div>
 
@@ -28,3 +28,61 @@
             <a href="./rockmusic.html" class="nav-link">Music & Livestreams</a>
         </nav>
     </div>
+
+    <main class="sermon-main">
+
+        <section class="sermon-hero">
+            <div class="sermon-hero-text">
+                <p class="section-kicker">Past Sermons</p>
+                <h1>Listen Anytime</h1>
+                <p class="sermon-lead">
+                    Missed a Sunday or want to revisit a message? You can listen to past sermons here anytime.
+                </p>
+                <a href="./calendar.html" class="library-button">Join Us This Sunday</a>
+            </div>
+
+            <div class="sermon-hero-image-wrap">
+                <img src="../images/pry.jpg" alt="Church worship service" class="sermon-hero-image">
+            </div>
+        </section>
+
+        <section class="sermon-layout">
+
+            <!-- ✅ ADDED BOX -->
+            <div class="sermon-link-card">
+                <h3>All Sermons</h3>
+                <p>
+                    To listen to all previous sermons, click below to view our full archive on Spotify.
+                </p>
+
+                <a href="https://open.spotify.com/show/YOUR_SHOW_LINK"
+                   target="_blank"
+                   class="library-button">
+                    Listen on Spotify
+                </a>
+            </div>
+
+            <!-- EXISTING PLAYER (unchanged) -->
+            <div class="sermon-player-card">
+                <h2>Faith Over Fear</h2>
+                <p class="sermon-meta">Pastor Jason • April 19, 2026</p>
+
+                <iframe
+                    style="border-radius:12px"
+                    src="https://open.spotify.com/embed/episode/0WtDNR14Eh02rIshVEG2yj?si=eqrsZRZ5RYKKOmxeGiVdSw"
+                    width="100%"
+                    height="200"
+                    frameBorder="0"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+                </iframe>
+
+                <p class="sermon-description">
+                    A message about trusting God even when fear tries to take over.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+</body>
+</html>

@@ -962,3 +962,149 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+.sermon-main {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 30px 30px 60px;
+}
+
+.sermon-hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 32px;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.40);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 24px;
+  padding: 32px;
+  margin-bottom: 30px;
+  backdrop-filter: blur(8px);
+}
+
+.sermon-hero-text h1 {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+
+.sermon-lead {
+  color: #eee;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.sermon-hero-image {
+  width: 100%;
+  border-radius: 20px;
+}
+
+.sermon-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.sermon-card {
+  background: rgba(0, 0, 0, 0.40);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 24px;
+  padding: 24px;
+  backdrop-filter: blur(8px);
+}
+
+.sermon-card h2 {
+  margin-top: 0;
+}
+
+.sermon-meta {
+  color: #ccc;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 1200px) {
+  .sermon-hero,
+  .sermon-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sermon-layout {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 30px;
+}
+
+.sermon-player-card,
+.sermon-list-card {
+  background: rgba(0, 0, 0, 0.40);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 24px;
+  padding: 28px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.sermon-description {
+  margin-top: 16px;
+  color: #ddd;
+  line-height: 1.7;
+}
+
+.sermon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.sermon-list-item {
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.06);
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sermon-list-item span {
+  font-weight: 400;
+  color: #bbb;
+}
+
+.sermon-list-item:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.sermon-list-item.active {
+  background: linear-gradient(135deg, #7c3aed, #5b21b6);
+}
+
+.sermon-link-card {
+  background: rgba(0, 0, 0, 0.40);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 24px;
+  padding: 24px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  margin-bottom: 20px;
+}
+
+.sermon-link-card h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.sermon-link-card p {
+  color: #ddd;
+  margin-bottom: 16px;
+}
+
+
+.sermon-link-card {
+  order: 2;
+}
+
+.sermon-player-card {
+  order: 1;
+}
