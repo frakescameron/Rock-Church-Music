@@ -1,24 +1,212 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-    <link rel="stylesheet" href="styles.css">
-
     <meta charset="UTF-8">
-
-    <title>Rock Church Music</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song Library | Rock Church Music</title>
+    <link rel="stylesheet" href="../styles.css">
 </head>
-<!-- i am a comment-->
-
 <body>
+    <div class="site-header">
+        <div class="header-left">
+            <a href="../index.html" class="logo-link">
+                <img src="../images/RockLogo.png" class="logo" alt="Rock Church Logo">
+            </a>
 
+            <div class="header-text">
+                <p>Rock Church Music</p>
+            </div>
+        </div>
 
-<img src="../images/RockLogo.png" class="logo">
+        <nav class="top-nav">
+            <a href="./whoarewe.html" class="nav-link">Who Are We?</a>
+            <a href="./whatwebelieve.html" class="nav-link">What We Believe</a>
+            <a href="./pastsermons.html" class="nav-link">Past Sermons</a>
+            <a href="./calendar.html" class="nav-link">Calendar</a>
+            <a href="./donate.html" class="nav-link">Donate</a>
+            <a href="./more.html" class="nav-link">More</a>
+            <a href="./rockmusic.html" class="nav-link active">Music & Livestreams</a>
+        </nav>
+    </div>
 
+    <main class="song-library-main">
 
+        <section class="song-library-hero">
+            <p class="section-kicker">Song Library</p>
+            <h1>Worship Song Library</h1>
+            <p>
+                Browse songs used by the worship team. Click a song to load the video and listen.
+            </p>
+        </section>
 
+        <section class="song-library-layout">
+
+            <div class="song-player-card">
+                <h2 id="activeSongTitle">Happy Day</h2>
+                <p id="activeSongArtist" class="song-player-meta">Hillsong</p>
+
+                <div class="song-youtube-wrap">
+                    <iframe
+                        id="songPlayer"
+                        src="https://www.youtube.com/embed/dGQrYzAQ82E"
+                        title="YouTube video player"
+                        frameborder="0"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <div class="song-scroll-card">
+                <h2>All Songs</h2>
+
+                <input
+                    type="text"
+                    id="songSearch"
+                    class="song-search"
+                    placeholder="Search songs..."
+                >
+
+                <div class="song-scroll-list">
+
+    
+                    <button class="library-song"
+                        data-title="Happy Day"
+                        data-artist="Hillsong"
+                        data-video="ShclGSNTcvc">
+                        <span>Happy Day</span>
+                        <small>Hillsong</small>
+                    </button>
+
+                    <button class="library-song"
+                        data-title="I Believe"
+                        data-artist="Phil Wickham"
+                        data-video="xTkuMaVNkiI">
+                        <span>I Believe</span>
+                        <small>Phil Wickham</small>
+                    </button>
+
+                    <button class="library-song"
+                        data-title="Whatever May Come"
+                        data-artist="Jeremy Camp"
+                        data-video="WhZo78OEDB0">
+                        <span>Whatever May Come</span>
+                        <small>Jeremy Camp</small>
+                    </button>
+
+                    <button class="library-song"
+                        data-title="Can’t Stop Praising"
+                        data-artist="Worship Song"
+                        data-video="yyWxV6pz8Go">
+                        <span>Can’t Stop Praising</span>
+                        <small>Worship Song</small>
+                    </button>
+
+                    <!-- NEW SONGS -->
+                    <button class="library-song"
+                        data-title="Jesus Paid It All"
+                        data-artist="Kristian Stanfill"
+                        data-video="SPx43lnUqNI">
+                        <span>Jesus Paid It All</span>
+                        <small>Kristian Stanfill</small>
+                    </button>
+
+                    <button class="library-song"
+                        data-title="My Redeemer Lives"
+                        data-artist="Hillsong"
+                        data-video="IReSOuREQ0M">
+                        <span>My Redeemer Lives</span>
+                        <small>Hillsong</small>
+                    </button>
+
+                    <button class="library-song"
+                        data-title="River Of Life"
+                        data-artist="Mac Powell"
+                        data-video="_wJCqVTIoKE">
+                        <span>River Of Life</span>
+                        <small>Mac Powell</small>
+                    </button>
+
+                    <button class="library-song"
+                        data-title="The Joy"
+                        data-artist="Maverick City Music"
+                        data-video="qqdNYWcL0v0">
+                        <span>The Joy</span>
+                        <small>Maverick City Music</small>
+                    </button>
+
+                    <button class="library-song"
+                        data-title="The Stand"
+                        data-artist="Hillsong United"
+                        data-video="lg3-p6-uGxw">
+                        <span>The Stand</span>
+                        <small>Hillsong United</small>
+                    </button>
+
+                    <button class="library-song"
+                        data-title="What He's Done"
+                        data-artist="Passion"
+                        data-video="jNbBNNMhMQs">
+                        <span>What He's Done</span>
+                        <small>Passion</small>
+                    </button>
+
+                    <button class="library-song"
+                        data-title="What He's Done (Alternate)"
+                        data-artist="Passion"
+                        data-video="EO_sQBBTcxo">
+                        <span>What He's Done (Alternate)</span>
+                        <small>Passion</small>
+                    </button>
+
+                    <button class="library-song"
+                        data-title="Yes He Lives"
+                        data-artist="New Life Worship"
+                        data-video="9S2A5zZ1798">
+                        <span>Yes He Lives</span>
+                        <small>New Life Worship</small>
+                    </button>
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        const songs = document.querySelectorAll(".library-song");
+        const player = document.getElementById("songPlayer");
+        const title = document.getElementById("activeSongTitle");
+        const artist = document.getElementById("activeSongArtist");
+        const search = document.getElementById("songSearch");
+
+        songs.forEach(song => {
+            song.addEventListener("click", () => {
+                songs.forEach(s => s.classList.remove("active"));
+                song.classList.add("active");
+
+                title.textContent = song.dataset.title;
+                artist.textContent = song.dataset.artist;
+                player.src = `https://www.youtube.com/embed/${song.dataset.video}`;
+            });
+        });
+
+        search.addEventListener("input", () => {
+            const searchText = search.value.toLowerCase();
+
+            songs.forEach(song => {
+                const title = song.dataset.title.toLowerCase();
+                const artist = song.dataset.artist.toLowerCase();
+
+                if (title.includes(searchText) || artist.includes(searchText)) {
+                    song.style.display = "flex";
+                } else {
+                    song.style.display = "none";
+                }
+            });
+        });
+    </script>
 </body>
-
 </html>
