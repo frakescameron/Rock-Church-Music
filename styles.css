@@ -1487,3 +1487,28 @@ body {
   object-fit: cover;
   display: block;
 }
+
+.sermon-player-card iframe {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .sermon-main {
+    padding: 20px 16px 40px;
+  }
+
+  .sermon-hero,
+  .sermon-layout,
+  .sermon-player-card,
+  .sermon-link-card {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .sermon-player-card iframe {
+    height: 152px;
+  }
+}
