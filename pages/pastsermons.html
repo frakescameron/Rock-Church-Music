@@ -64,20 +64,22 @@
 
             <!-- EXISTING PLAYER (unchanged) -->
             <div class="sermon-player-card">
-                <h2>Faith Over Fear</h2>
-                <p class="sermon-meta">Pastor Jason • April 19, 2026</p>
+               <div class="sermon-player-card" id="sermonCard">
+    <h2 id="sermonTitle"></h2>
+    <p class="sermon-meta" id="sermonMeta"></p>
 
-                <iframe
-                    style="border-radius:12px"
-                    src="https://open.spotify.com//embed/episode/6kgljRyhyPMLbuxvnsTipT?si=o4YGECp3QTOBvCz4ihbF1g"
-                    width="100%"
-                    height="200"
-                    frameBorder="0"
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-                </iframe>
+    <iframe
+        id="sermonPlayer"
+        style="border-radius:12px"
+        src=""
+        width="100%"
+        height="200"
+        frameBorder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+    </iframe>
 
-                <p class="sermon-description">
-                    A message about trusting God even when fear tries to take over.
+    <p class="sermon-description" id="sermonDescription"></p>
+</div>
                 </p>
             </div>
 
@@ -86,3 +88,37 @@
     </main>
 </body>
 </html>
+
+<script>
+const SERMON_SHEET = "PASTE_YOUR_SERMONS_CSV_LINK_HERE";
+
+function parseCSV(text) {
+    const rows = text.trim().split(/\r?\n/).map(row => row.split(","));
+    const headers = rows.shift().map(h => h.trim());
+
+    return rows.map(row => {
+        const item = {};
+        headers.forEach((header, index) => {
+            item[header] = row[index] ? row[index].trim() : "";
+        });
+        return item;
+    });
+}
+
+fetch(SERMON_SHEET)
+    .then(res => res.text())
+    .then(text => {
+        const sermons = parseCSV(text);
+
+        if (sermons.length === 0) return;
+
+        const latest = sermons[0]; // first row = current sermon
+
+        document.getElementById("sermonTitle").textContent = latest.title;
+        document.getElementById("sermonMeta").textContent =
+            `${latest.speaker} • ${latest.date}`;
+        document.getElementById("sermonPlayer").src = latest.spotifyEmbed;
+        document.getElementById("sermonDescription").textContent = latest.description;
+    })
+    .catch(err => console.error(err));
+</script>
