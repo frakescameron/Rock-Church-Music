@@ -34,81 +34,22 @@
             <div class="setlist-card">
                 <h2>This Week's Setlist</h2>
 
-                <div class="playlist">
-                    <div class="song" data-src="../audio/My Feet Are On The Rock FL 4-26-26.mp3" onclick="playSong(this)">
-                        <button class="play-btn" type="button">▶</button>
+                <div class="playlist" id="setlistSongs">
+    <p>Loading setlist...</p>
+</div>
 
-                        <div class="song-info">
-                            <div class="song-title">My Feet Are On The Rock</div>
-                            <div class="song-artist">I AM THEY</div>
-                        </div>
+<div class="fake-audio-player">
+    <span id="nowPlaying">Select a song</span>
+</div>
 
-                        <div class="playing-indicator" aria-hidden="true">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                        <div class="song-time">--:--</div>
-                    </div>
-
-                    <div class="song" data-src="../audio/I Believe FL 4-21-26.mp3" onclick="playSong(this)">
-                        <button class="play-btn" type="button">▶</button>
-
-                        <div class="song-info">
-                            <div class="song-title">I Believe</div>
-                            <div class="song-artist">Phil Wickham</div>
-                        </div>
-
-                        <div class="playing-indicator" aria-hidden="true">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                        <div class="song-time">--:--</div>
-                    </div>
-
-                    <div class="song" data-src="../audio/Lead Me To The Cross FL 4-26-26.mp3" onclick="playSong(this)">
-                        <button class="play-btn" type="button">▶</button>
-
-                        <div class="song-info">
-                            <div class="song-title">Lead Me To The Cross</div>
-                            <div class="song-artist">Hillsong</div>
-                        </div>
-
-                        <div class="playing-indicator" aria-hidden="true">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                        <div class="song-time">--:--</div>
-                    </div>
-
-                    <div class="song" data-src="../audio/Agnus Dei FL 4-26-26.mp3" onclick="playSong(this)">
-                        <button class="play-btn" type="button">▶</button>
-
-                        <div class="song-info">
-                            <div class="song-title">Agnus Dei</div>
-                            <div class="song-artist">Micheal W. Smith</div>
-                        </div>
-
-                        <div class="playing-indicator" aria-hidden="true">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                        <div class="song-time">--:--</div>
-                    </div>
-                </div>
-
-                <audio id="audioPlayer" controls></audio>
+<iframe
+    id="hiddenYoutubePlayer"
+    width="0"
+    height="0"
+    style="display:none;"
+    frameborder="0"
+    allow="autoplay">
+</iframe>
 
                 <div class="library-link-wrap">
                     <span class="library-label">Browse the complete song catalog</span>
@@ -132,74 +73,99 @@
 </div>
     </div>
 
-    <script>
-        const player = document.getElementById("audioPlayer");
-        let currentSong = null;
+   <script>
+    const SETLIST_SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRoeVrWExyazLI1ZRrHR35wAvmCQ1uEKj1dyRneeylYnZ7Yg2DyxzVGgLp_xdomZ00_6pMMCcZG7zip/pub?gid=840458912&single=true&output=csv";
 
-        function playSong(clickedSong) {
-            const file = clickedSong.getAttribute("data-src");
+    const setlistSongs = document.getElementById("setlistSongs");
+    const nowPlaying = document.getElementById("nowPlaying");
+    const hiddenPlayer = document.getElementById("hiddenYoutubePlayer");
 
-            if (currentSong === clickedSong && !player.paused) {
-                player.pause();
-                clickedSong.classList.remove("active", "playing");
-                clickedSong.querySelector(".play-btn").textContent = "▶";
-                return;
-            }
+    let currentSong = null;
 
-            player.src = file;
-            player.play();
+    function parseCSV(text) {
+        const rows = text.trim().split(/\r?\n/).map(row => row.split(","));
+        const headers = rows.shift().map(h => h.trim());
 
-            document.querySelectorAll(".song").forEach(song => {
-                song.classList.remove("active", "playing");
-                song.querySelector(".play-btn").textContent = "▶";
+        return rows.map(row => {
+            const item = {};
+            headers.forEach((header, index) => {
+                item[header] = row[index] ? row[index].trim() : "";
             });
+            return item;
+        });
+    }
 
-            clickedSong.classList.add("active", "playing");
-            clickedSong.querySelector(".play-btn").textContent = "❚❚";
-            currentSong = clickedSong;
+    function renderSetlist(songs) {
+        setlistSongs.innerHTML = "";
+
+        const activeSongs = songs.filter(song =>
+            song.active && song.active.toLowerCase() !== "no"
+        );
+
+        if (activeSongs.length === 0) {
+            setlistSongs.innerHTML = "<p>No setlist found.</p>";
+            return;
         }
 
-        player.addEventListener("pause", function () {
-            if (currentSong) {
-                currentSong.classList.remove("playing");
-                currentSong.querySelector(".play-btn").textContent = "▶";
-            }
-        });
+        activeSongs.forEach(song => {
+            const item = document.createElement("div");
+            item.className = "song";
 
-        player.addEventListener("play", function () {
-            if (currentSong) {
-                currentSong.classList.add("playing");
-                currentSong.querySelector(".play-btn").textContent = "❚❚";
-            }
-        });
+            item.innerHTML = `
+                <button class="play-btn" type="button">▶</button>
 
-        player.addEventListener("ended", function () {
-            if (currentSong) {
-                currentSong.classList.remove("active", "playing");
-                currentSong.querySelector(".play-btn").textContent = "▶";
-                currentSong = null;
-            }
-        });
+                <div class="song-info">
+                    <div class="song-title">${song.title}</div>
+                    <div class="song-artist">${song.artist}</div>
+                </div>
 
-        function formatTime(seconds) {
-            const minutes = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${minutes}:${secs.toString().padStart(2, "0")}`;
-        }
+                <div class="playing-indicator" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
 
-        document.querySelectorAll(".song").forEach(song => {
-            const file = song.getAttribute("data-src");
-            const timeBox = song.querySelector(".song-time");
-            const tempAudio = new Audio(file);
+                <div class="song-time">${song.duration || "--:--"}</div>
+            `;
 
-            tempAudio.addEventListener("loadedmetadata", function () {
-                timeBox.textContent = formatTime(tempAudio.duration);
+            item.addEventListener("click", () => {
+                if (currentSong === item && item.classList.contains("playing")) {
+                    hiddenPlayer.src = "";
+                    item.classList.remove("active", "playing");
+                    item.querySelector(".play-btn").textContent = "▶";
+                    nowPlaying.textContent = "Select a song";
+                    currentSong = null;
+                    return;
+                }
+
+                document.querySelectorAll(".song").forEach(s => {
+                    s.classList.remove("active", "playing");
+                    s.querySelector(".play-btn").textContent = "▶";
+                });
+
+                item.classList.add("active", "playing");
+                item.querySelector(".play-btn").textContent = "❚❚";
+                nowPlaying.textContent = `Now Playing: ${song.title}`;
+
+                hiddenPlayer.src = `https://www.youtube.com/embed/${song.youtubeId}?autoplay=1`;
+                currentSong = item;
             });
 
-            tempAudio.addEventListener("error", function () {
-                timeBox.textContent = "0:00";
-            });
+            setlistSongs.appendChild(item);
         });
-    </script>
+    }
+
+    fetch(SETLIST_SHEET)
+        .then(res => res.text())
+        .then(text => {
+            const songs = parseCSV(text);
+            renderSetlist(songs);
+        })
+        .catch(err => {
+            setlistSongs.innerHTML = "<p>Could not load setlist.</p>";
+            console.error(err);
+        });
+</script>
 </body>
 </html>
