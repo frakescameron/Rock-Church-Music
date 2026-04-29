@@ -86,11 +86,10 @@
         </section>
 
     </main>
-</body>
-</html>
+
 
 <script>
-const SERMON_SHEET = "PASTE_YOUR_SERMONS_CSV_LINK_HERE";
+const SERMON_SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRoeVrWExyazLI1ZRrHR35wAvmCQ1uEKj1dyRneeylYnZ7Yg2DyxzVGgLp_xdomZ00_6pMMCcZG7zip/pub?gid=613171596&single=true&output=csv";
 
 function parseCSV(text) {
     const rows = text.trim().split(/\r?\n/).map(row => row.split(","));
@@ -122,3 +121,8 @@ fetch(SERMON_SHEET)
     })
     .catch(err => console.error(err));
 </script>
+
+
+</body>
+</html>
+
