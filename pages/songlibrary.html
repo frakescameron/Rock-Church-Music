@@ -45,7 +45,7 @@
                 <h2 id="activeSongTitle"></h2>
                 <p id="activeSongArtist" class="song-player-meta"></p>
 
-               <div class="song-youtube-wrap" id="playerWrap">
+                <div class="song-youtube-wrap" id="playerWrap">
                     <div class="song-placeholder" id="songPlaceholder">
                         Select a song to play
                     </div>
@@ -71,131 +71,8 @@
                     placeholder="Search songs..."
                 >
 
-                <div class="song-scroll-list">
-
-    
-                    <button class="library-song"
-                        data-title="Happy Day"
-                        data-artist="Hillsong"
-                        data-video="ShclGSNTcvc">
-                        <span>Happy Day</span>
-                        <small>Hillsong</small>
-                    </button>
-
-                    <button class="library-song"
-                        data-title="I Believe"
-                        data-artist="Phil Wickham"
-                        data-video="xTkuMaVNkiI">
-                        <span>I Believe</span>
-                        <small>Phil Wickham</small>
-                    </button>
-
-                    <button class="library-song"
-                        data-title="Whatever May Come"
-                        data-artist="Jeremy Camp"
-                        data-video="WhZo78OEDB0">
-                        <span>Whatever May Come</span>
-                        <small>Jeremy Camp</small>
-                    </button>
-
-                    <button class="library-song"
-                        data-title="Can’t Stop Praising"
-                        data-artist="Worship Song"
-                        data-video="yyWxV6pz8Go">
-                        <span>Can’t Stop Praising</span>
-                        <small>Worship Song</small>
-                    </button>
-
-                    <!-- NEW SONGS -->
-                    <button class="library-song"
-                        data-title="Jesus Paid It All"
-                        data-artist="Kristian Stanfill"
-                        data-video="SPx43lnUqNI">
-                        <span>Jesus Paid It All</span>
-                        <small>Kristian Stanfill</small>
-                    </button>
-
-                    <button class="library-song"
-                        data-title="My Redeemer Lives"
-                        data-artist="Hillsong"
-                        data-video="IReSOuREQ0M">
-                        <span>My Redeemer Lives</span>
-                        <small>Hillsong</small>
-                    </button>
-
-                    <button class="library-song"
-                        data-title="River Of Life"
-                        data-artist="Mac Powell"
-                        data-video="_wJCqVTIoKE">
-                        <span>River Of Life</span>
-                        <small>Mac Powell</small>
-                    </button>
-
-                    <button class="library-song"
-                        data-title="The Joy"
-                        data-artist="Maverick City Music"
-                        data-video="qqdNYWcL0v0">
-                        <span>The Joy</span>
-                        <small>Maverick City Music</small>
-                    </button>
-
-                    <button class="library-song"
-                        data-title="The Stand"
-                        data-artist="Hillsong United"
-                        data-video="lg3-p6-uGxw">
-                        <span>The Stand</span>
-                        <small>Hillsong United</small>
-                    </button>
-
-                    <button class="library-song"
-                        data-title="What He's Done"
-                        data-artist="Passion"
-                        data-video="jNbBNNMhMQs">
-                        <span>What He's Done</span>
-                        <small>Passion</small>
-                    </button>
-
-                    <button class="library-song"
-                        data-title="What He's Done (Alternate)"
-                        data-artist="Passion"
-                        data-video="EO_sQBBTcxo">
-                        <span>What He's Done (Alternate)</span>
-                        <small>Passion</small>
-                    </button>
-
-                    <button class="library-song"
-                        data-title="Yes He Lives"
-                        data-artist="New Life Worship"
-                        data-video="9S2A5zZ1798">
-                        <span>Yes He Lives</span>
-                        <small>New Life Worship</small>
-                    </button>
-
-                    <button class="library-song"
-                        data-title="Agnus Dei"
-                        data-artist="Micheal W. Smith"
-                        data-video="uw2P-Q0K_e4">
-                        <span>Agnus Dei</span>
-                        <small>Micheal W. Smith</small>
-                    </button>
-
-                    <button class="library-song"
-                        data-title="Lead Me To The Cross"
-                        data-artist="Hillsong"
-                        data-video="MUx6qTtfqHY">
-                        <span>Lead Me To The Cross</span>
-                        <small>Hillsong</small>
-                    </button>
-
-                    <button class="library-song"
-                        data-title="My Feet Are On The Rock"
-                        data-artist="I AM THEY"
-                        data-video="8_68i2KRrYg">
-                        <span>My Feet Are On The Rock</span>
-                        <small>I AM THEY</small>
-                    </button>
-
-
+                <div class="song-scroll-list" id="songList">
+                    <p>Loading songs...</p>
                 </div>
             </div>
 
@@ -204,40 +81,88 @@
     </main>
 
     <script>
-        const songs = document.querySelectorAll(".library-song");
+        const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRoeVrWExyazLI1ZRrHR35wAvmCQ1uEKj1dyRneeylYnZ7Yg2DyxzVGgLp_xdomZ00_6pMMCcZG7zip/pub?gid=0&single=true&output=csv";
+
         const player = document.getElementById("songPlayer");
         const title = document.getElementById("activeSongTitle");
         const artist = document.getElementById("activeSongArtist");
         const search = document.getElementById("songSearch");
+        const songList = document.getElementById("songList");
+        const placeholder = document.getElementById("songPlaceholder");
 
-        songs.forEach(song => {
-  song.addEventListener("click", () => {
-    songs.forEach(s => s.classList.remove("active"));
-    song.classList.add("active");
+        let songs = [];
 
-    title.textContent = song.dataset.title;
-    artist.textContent = song.dataset.artist;
+        function parseCSV(text) {
+            const rows = text.trim().split(/\r?\n/).map(row => row.split(","));
+            const headers = rows.shift().map(h => h.trim());
 
-    player.src = `https://www.youtube.com/embed/${song.dataset.video}?autoplay=1`;
+            return rows.map(row => {
+                const item = {};
+                headers.forEach((header, index) => {
+                    item[header] = row[index] ? row[index].trim() : "";
+                });
+                return item;
+            });
+        }
 
-    document.getElementById("songPlaceholder").style.display = "none";
-    player.style.opacity = "1";
-  });
-});
+        function renderSongs(list) {
+            songList.innerHTML = "";
+
+            const visibleSongs = list.filter(song =>
+                song.active && song.active.toLowerCase() !== "no"
+            );
+
+            if (visibleSongs.length === 0) {
+                songList.innerHTML = "<p>No songs found.</p>";
+                return;
+            }
+
+            visibleSongs.forEach(song => {
+                const button = document.createElement("button");
+                button.className = "library-song";
+
+                button.innerHTML = `
+                    <span>${song.title}</span>
+                    <small>${song.artist}</small>
+                `;
+
+                button.addEventListener("click", () => {
+                    document.querySelectorAll(".library-song").forEach(s => s.classList.remove("active"));
+                    button.classList.add("active");
+
+                    title.textContent = song.title;
+                    artist.textContent = song.artist;
+
+                    player.src = `https://www.youtube.com/embed/${song.youtubeId}?autoplay=1`;
+
+                    placeholder.style.display = "none";
+                    player.style.opacity = "1";
+                });
+
+                songList.appendChild(button);
+            });
+        }
+
+        fetch(SHEET_URL)
+            .then(response => response.text())
+            .then(text => {
+                songs = parseCSV(text);
+                renderSongs(songs);
+            })
+            .catch(error => {
+                songList.innerHTML = "<p>Could not load songs.</p>";
+                console.error(error);
+            });
 
         search.addEventListener("input", () => {
             const searchText = search.value.toLowerCase();
 
-            songs.forEach(song => {
-                const title = song.dataset.title.toLowerCase();
-                const artist = song.dataset.artist.toLowerCase();
+            const filtered = songs.filter(song =>
+                song.title.toLowerCase().includes(searchText) ||
+                song.artist.toLowerCase().includes(searchText)
+            );
 
-                if (title.includes(searchText) || artist.includes(searchText)) {
-                    song.style.display = "flex";
-                } else {
-                    song.style.display = "none";
-                }
-            });
+            renderSongs(filtered);
         });
     </script>
 </body>
