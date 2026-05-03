@@ -63,7 +63,8 @@
 
     <div class="youtube-wrap">
         <iframe
-            src="https://www.youtube.com/embed/JOW1Cbof56o?si=2aK7MTmQ93lm_B1h"
+            id="serviceVideo"
+            src=""
             title="YouTube video player"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -75,10 +76,12 @@
 
    <script>
     const SETLIST_SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRoeVrWExyazLI1ZRrHR35wAvmCQ1uEKj1dyRneeylYnZ7Yg2DyxzVGgLp_xdomZ00_6pMMCcZG7zip/pub?gid=840458912&single=true&output=csv";
+    const SERVICE_SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRoeVrWExyazLI1ZRrHR35wAvmCQ1uEKj1dyRneeylYnZ7Yg2DyxzVGgLp_xdomZ00_6pMMCcZG7zip/pub?gid=899030639&single=true&output=csv";
 
     const setlistSongs = document.getElementById("setlistSongs");
     const nowPlaying = document.getElementById("nowPlaying");
     const hiddenPlayer = document.getElementById("hiddenYoutubePlayer");
+    
 
     let currentSong = null;
 
@@ -166,6 +169,25 @@
             setlistSongs.innerHTML = "<p>Could not load setlist.</p>";
             console.error(err);
         });
+        const serviceVideo = document.getElementById("serviceVideo");
+
+fetch(SERVICE_SHEET)
+    .then(res => res.text())
+    .then(text => {
+        const rows = text.trim().split(/\r?\n/);
+
+        // skip header, grab first data row
+        const youtubeId = rows[1]?.trim();
+
+        if (youtubeId) {
+            serviceVideo.src = `https://www.youtube.com/embed/${youtubeId}`;
+        } else {
+            console.error("No YouTube ID found in sheet");
+        }
+    })
+    .catch(err => {
+        console.error("Service video failed to load:", err);
+    });
 </script>
 </body>
 </html>
