@@ -2011,3 +2011,36 @@ body {
   color: #222;
   font-size: 0.95rem;
 }
+
+.social-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.social-circle {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.social-circle img {
+  width: 75px;
+  height: 65px;
+  object-fit: contain;
+}
+
+.social-circle.youtube {
+  background: #ffffff;
+}
+
+.social-circle.facebook {
+  background: #000000;
+}
