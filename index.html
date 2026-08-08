@@ -115,19 +115,57 @@
                     <p><a href="tel:12082338400">(208)233-8400</a></p>
                 </div>
 
-                <form class="contact-form">
-                    <input type="text" placeholder="Name *">
-                    <input type="email" placeholder="Email *">
-                    <input type="text" placeholder="Phone">
-                    <input type="text" placeholder="Subject">
-                    <textarea placeholder="Message"></textarea>
-                    <div class="contact-button-wrap">
-                        <button type="button" class="send-button">Send</button>
-                    </div>
-                </form>
+                    
+                    <form class="contact-form"
+                        action="https://formspree.io/f/mqpzeelb"
+                        method="POST">
+
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Name *"
+                            required
+                        >
+
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email *"
+                            required
+                        >
+
+                        <input
+                            type="tel"
+                            name="phone"
+                            placeholder="Phone"
+                        >
+
+                        <input
+                            type="text"
+                            name="subject"
+                            placeholder="Subject"
+                        >
+
+                        <textarea
+                            name="message"
+                            placeholder="Message *"
+                            required
+                        ></textarea>
+
+                        <div class="contact-button-wrap">
+                            <button type="submit" class="send-button">Send</button>
+                        </div>
+
+                    </form>
+                    ```
+
             </div>
         </section>
     </main>
 
 </body>
 </html>
+
+
+
+
