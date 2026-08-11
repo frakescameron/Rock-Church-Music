@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +7,9 @@
     <title>Music & Livestreams | Rock Church Music</title>
     <link rel="stylesheet" href="../styles.css">
 </head>
+
 <body>
+
     <div class="site-header">
         <div class="header-left">
             <a href="../index.html" class="logo-link">
@@ -30,165 +33,295 @@
         </nav>
     </div>
 
+
     <div class="page">
+
         <div class="leftside">
+
             <div class="setlist-card">
+
                 <h2>Last Week's Setlist</h2>
 
                 <div class="playlist" id="setlistSongs">
-    <p>Loading setlist...</p>
-</div>
+                    <p>Loading setlist...</p>
+                </div>
 
-<div class="fake-audio-player">
-    <span id="nowPlaying">Select a song</span>
-</div>
+                <div class="fake-audio-player">
+                    <span id="nowPlaying">Select a song</span>
+                </div>
 
-<iframe
-    id="hiddenYoutubePlayer"
-    width="0"
-    height="0"
-    style="display:none;"
-    frameborder="0"
-    allow="autoplay">
-</iframe>
+                <iframe
+                    id="hiddenYoutubePlayer"
+                    width="0"
+                    height="0"
+                    style="display:none;"
+                    frameborder="0"
+                    allow="autoplay">
+                </iframe>
 
                 <div class="library-link-wrap">
-                    <span class="library-label">Browse the complete song catalog</span>
-                    <a class="library-button" href="./songlibrary.html">Open Full Song Library</a>
+                    <span class="library-label">
+                        Browse the complete song catalog
+                    </span>
+
+                    <a class="library-button" href="./songlibrary.html">
+                        Open Full Song Library
+                    </a>
                 </div>
+
             </div>
+
         </div>
 
-       <div class="rightside">
-    <h2>Last Week's Service</h2>
 
-    <div class="youtube-wrap">
-        <iframe
-            id="serviceVideo"
-            src=""
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-        </iframe>
+        <div class="rightside">
+
+            <h2>Last Week's Service</h2>
+
+            <div class="youtube-wrap">
+                <iframe
+                    id="serviceVideo"
+                    src=""
+                    title="Facebook video player"
+                    frameborder="0"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+        </div>
+
     </div>
-</div>
-    </div>
 
-   <script>
-    const SETLIST_SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRoeVrWExyazLI1ZRrHR35wAvmCQ1uEKj1dyRneeylYnZ7Yg2DyxzVGgLp_xdomZ00_6pMMCcZG7zip/pub?gid=840458912&single=true&output=csv";
-    const SERVICE_SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRoeVrWExyazLI1ZRrHR35wAvmCQ1uEKj1dyRneeylYnZ7Yg2DyxzVGgLp_xdomZ00_6pMMCcZG7zip/pub?gid=899030639&single=true&output=csv";
 
-    const setlistSongs = document.getElementById("setlistSongs");
-    const nowPlaying = document.getElementById("nowPlaying");
-    const hiddenPlayer = document.getElementById("hiddenYoutubePlayer");
-    
+    <script>
 
-    let currentSong = null;
+        const SETLIST_SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRoeVrWExyazLI1ZRrHR35wAvmCQ1uEKj1dyRneeylYnZ7Yg2DyxzVGgLp_xdomZ00_6pMMCcZG7zip/pub?gid=840458912&single=true&output=csv";
 
-    function parseCSV(text) {
-        const rows = text.trim().split(/\r?\n/).map(row => row.split(","));
-        const headers = rows.shift().map(h => h.trim());
+        const SERVICE_SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRoeVrWExyazLI1ZRrHR35wAvmCQ1uEKj1dyRneeylYnZ7Yg2DyxzVGgLp_xdomZ00_6pMMCcZG7zip/pub?gid=899030639&single=true&output=csv";
 
-        return rows.map(row => {
-            const item = {};
-            headers.forEach((header, index) => {
-                item[header] = row[index] ? row[index].trim() : "";
-            });
-            return item;
-        });
-    }
 
-    function renderSetlist(songs) {
-        setlistSongs.innerHTML = "";
+        const setlistSongs = document.getElementById("setlistSongs");
+        const nowPlaying = document.getElementById("nowPlaying");
+        const hiddenPlayer = document.getElementById("hiddenYoutubePlayer");
 
-        const activeSongs = songs.filter(song =>
-            song.active && song.active.toLowerCase() !== "no"
-        );
+        let currentSong = null;
 
-        if (activeSongs.length === 0) {
-            setlistSongs.innerHTML = "<p>No setlist found.</p>";
-            return;
-        }
 
-        activeSongs.forEach(song => {
-            const item = document.createElement("div");
-            item.className = "song";
+        function parseCSV(text) {
 
-            item.innerHTML = `
-                <button class="play-btn" type="button">▶</button>
+            const rows = text
+                .trim()
+                .split(/\r?\n/)
+                .map(row => row.split(","));
 
-                <div class="song-info">
-                    <div class="song-title">${song.title}</div>
-                    <div class="song-artist">${song.artist}</div>
-                </div>
+            const headers = rows.shift().map(h => h.trim());
 
-                <div class="playing-indicator" aria-hidden="true">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+            return rows.map(row => {
 
-                <div class="song-time">${song.duration || "--:--"}</div>
-            `;
+                const item = {};
 
-            item.addEventListener("click", () => {
-                if (currentSong === item && item.classList.contains("playing")) {
-                    hiddenPlayer.src = "";
-                    item.classList.remove("active", "playing");
-                    item.querySelector(".play-btn").textContent = "▶";
-                    nowPlaying.textContent = "Select a song";
-                    currentSong = null;
-                    return;
-                }
-
-                document.querySelectorAll(".song").forEach(s => {
-                    s.classList.remove("active", "playing");
-                    s.querySelector(".play-btn").textContent = "▶";
+                headers.forEach((header, index) => {
+                    item[header] = row[index]
+                        ? row[index].trim()
+                        : "";
                 });
 
-                item.classList.add("active", "playing");
-                item.querySelector(".play-btn").textContent = "❚❚";
-                nowPlaying.textContent = `Now Playing: ${song.title}`;
+                return item;
+            });
+        }
 
-                hiddenPlayer.src = `https://www.youtube.com/embed/${song.youtubeId}?autoplay=1`;
-                currentSong = item;
+
+        function renderSetlist(songs) {
+
+            setlistSongs.innerHTML = "";
+
+            const activeSongs = songs.filter(song =>
+                song.active &&
+                song.active.toLowerCase() !== "no"
+            );
+
+
+            if (activeSongs.length === 0) {
+
+                setlistSongs.innerHTML =
+                    "<p>No setlist found.</p>";
+
+                return;
+            }
+
+
+            activeSongs.forEach(song => {
+
+                const item = document.createElement("div");
+
+                item.className = "song";
+
+
+                item.innerHTML = `
+                    <button class="play-btn" type="button">▶</button>
+
+                    <div class="song-info">
+                        <div class="song-title">
+                            ${song.title}
+                        </div>
+
+                        <div class="song-artist">
+                            ${song.artist}
+                        </div>
+                    </div>
+
+                    <div class="playing-indicator" aria-hidden="true">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <div class="song-time">
+                        ${song.duration || "--:--"}
+                    </div>
+                `;
+
+
+                item.addEventListener("click", () => {
+
+                    if (
+                        currentSong === item &&
+                        item.classList.contains("playing")
+                    ) {
+
+                        hiddenPlayer.src = "";
+
+                        item.classList.remove(
+                            "active",
+                            "playing"
+                        );
+
+                        item.querySelector(".play-btn")
+                            .textContent = "▶";
+
+                        nowPlaying.textContent =
+                            "Select a song";
+
+                        currentSong = null;
+
+                        return;
+                    }
+
+
+                    document.querySelectorAll(".song").forEach(s => {
+
+                        s.classList.remove(
+                            "active",
+                            "playing"
+                        );
+
+                        s.querySelector(".play-btn")
+                            .textContent = "▶";
+
+                    });
+
+
+                    item.classList.add(
+                        "active",
+                        "playing"
+                    );
+
+                    item.querySelector(".play-btn")
+                        .textContent = "❚❚";
+
+                    nowPlaying.textContent =
+                        `Now Playing: ${song.title}`;
+
+
+                    hiddenPlayer.src =
+                        `https://www.youtube.com/embed/${song.youtubeId}?autoplay=1`;
+
+                    currentSong = item;
+
+                });
+
+
+                setlistSongs.appendChild(item);
+
             });
 
-            setlistSongs.appendChild(item);
-        });
-    }
-
-    fetch(SETLIST_SHEET)
-        .then(res => res.text())
-        .then(text => {
-            const songs = parseCSV(text);
-            renderSetlist(songs);
-        })
-        .catch(err => {
-            setlistSongs.innerHTML = "<p>Could not load setlist.</p>";
-            console.error(err);
-        });
-        const serviceVideo = document.getElementById("serviceVideo");
-
-fetch(SERVICE_SHEET)
-    .then(res => res.text())
-    .then(text => {
-        const rows = text.trim().split(/\r?\n/);
-
-        // skip header, grab first data row
-        const youtubeId = rows[1]?.trim();
-
-        if (youtubeId) {
-            serviceVideo.src = `https://www.youtube.com/embed/${youtubeId}`;
-        } else {
-            console.error("No YouTube ID found in sheet");
         }
-    })
-    .catch(err => {
-        console.error("Service video failed to load:", err);
-    });
-</script>
+
+
+        fetch(SETLIST_SHEET)
+
+            .then(res => res.text())
+
+            .then(text => {
+
+                const songs = parseCSV(text);
+
+                renderSetlist(songs);
+
+            })
+
+            .catch(err => {
+
+                setlistSongs.innerHTML =
+                    "<p>Could not load setlist.</p>";
+
+                console.error(err);
+
+            });
+
+
+        /*
+         * LAST WEEK'S SERVICE
+         * Uses SERVICE_SHEET and Facebook
+         */
+
+        const serviceVideo =
+            document.getElementById("serviceVideo");
+
+
+        fetch(SERVICE_SHEET)
+
+            .then(res => res.text())
+
+            .then(text => {
+
+                const rows =
+                    text.trim().split(/\r?\n/);
+
+
+                // Skip the header and get the first data row
+                const facebookUrl =
+                    rows[1]?.trim();
+
+
+                if (facebookUrl) {
+
+                    serviceVideo.src =
+                        `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(facebookUrl)}&show_text=false`;
+
+                } else {
+
+                    console.error(
+                        "No Facebook video URL found in sheet"
+                    );
+
+                }
+
+            })
+
+            .catch(err => {
+
+                console.error(
+                    "Service video failed to load:",
+                    err
+                );
+
+            });
+
+    </script>
+
 </body>
 </html>
+```
