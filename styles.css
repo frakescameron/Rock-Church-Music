@@ -2020,7 +2020,7 @@ body {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-  margin-top: 18px;
+  margin-top: 20px;
 }
 
 .social-circle {
@@ -2037,7 +2037,7 @@ body {
 
 .social-circle img {
   width: 75px;
-  height: 65px;
+  height: 55px;
   object-fit: contain;
 }
 
@@ -2046,6 +2046,10 @@ body {
 }
 
 .social-circle.facebook {
+  background: #000000;
+}
+
+.social-circle.spotify {
   background: #000000;
 }
 
