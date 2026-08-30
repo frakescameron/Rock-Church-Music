@@ -105,6 +105,12 @@ function parseCSV(text) {
     });
 }
 
+function toSpotifyEmbed(url) {
+    if (!url) return "";
+    if (url.includes("/embed/")) return url;
+    return url.replace("open.spotify.com/", "open.spotify.com/embed/");
+}
+
 fetch(SERMON_SHEET)
     .then(res => res.text())
     .then(text => {
@@ -112,12 +118,12 @@ fetch(SERMON_SHEET)
 
         if (sermons.length === 0) return;
 
-        const latest = sermons[0]; // first row = current sermon
+        const latest = sermons[0];
 
         document.getElementById("sermonTitle").textContent = latest.title;
         document.getElementById("sermonMeta").textContent =
             `${latest.speaker} • ${latest.date}`;
-        document.getElementById("sermonPlayer").src = latest.spotifyEmbed;
+        document.getElementById("sermonPlayer").src = toSpotifyEmbed(latest.spotifyEmbed);
         document.getElementById("sermonDescription").textContent = latest.description;
     })
     .catch(err => console.error(err));
