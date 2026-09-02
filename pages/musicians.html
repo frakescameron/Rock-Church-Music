@@ -11,14 +11,33 @@
     <style>
         /* ---------- Compact musician-resource layout ---------- */
 
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #musicianContent {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .site-header {
+            flex-shrink: 0;
+        }
+
         .msc-main {
             max-width: 1800px;
+            width: 100%;
             margin: 0 auto;
-            padding: 10px 18px 14px;
-            height: calc(100vh - 82px);
+            padding: 8px 16px 10px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
+            flex: 1 1 auto;
+            min-height: 0;
         }
 
         .msc-topbar {
@@ -43,28 +62,29 @@
             background: rgba(0, 0, 0, 0.40);
             border: 1px solid rgba(255, 255, 255, 0.10);
             border-radius: 14px;
-            padding: 10px 16px;
-            margin-bottom: 10px;
+            padding: 8px 14px;
+            margin-bottom: 8px;
             backdrop-filter: blur(8px);
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
         }
 
         .msc-hero h1 {
             margin: 0 0 2px;
-            font-size: 1.35rem;
+            font-size: 1.2rem;
         }
 
         .msc-hero p {
             margin: 0;
             color: #efefef;
-            line-height: 1.25;
-            font-size: 0.82rem;
+            line-height: 1.2;
+            font-size: 0.78rem;
         }
 
         .msc-layout {
             display: grid;
-            grid-template-columns: 300px minmax(0, 1fr);
-            gap: 12px;
+            grid-template-columns: 280px minmax(0, 1fr);
+            grid-template-rows: minmax(0, 1fr);
+            gap: 10px;
             align-items: stretch;
             flex: 1;
             min-height: 0;
@@ -81,8 +101,8 @@
             background: rgba(0, 0, 0, 0.42);
             border: 1px solid rgba(255, 255, 255, 0.10);
             border-radius: 14px;
-            padding: 12px;
-            flex: 1;
+            padding: 10px;
+            flex: 3 1 0;
             min-height: 0;
             display: flex;
             flex-direction: column;
@@ -93,7 +113,7 @@
         .msc-list-card h2 {
             margin-top: 0;
             margin-bottom: 2px;
-            font-size: 1.2rem;
+            font-size: 1.05rem;
         }
 
         .msc-search {
@@ -161,7 +181,7 @@
             background: rgba(0, 0, 0, 0.40);
             border: 1px solid rgba(255, 255, 255, 0.10);
             border-radius: 14px;
-            padding: 12px;
+            padding: 10px;
             min-height: 0;
             display: flex;
             flex-direction: column;
@@ -173,9 +193,31 @@
             background: rgba(0, 0, 0, 0.42);
             border: 1px solid rgba(255, 255, 255, 0.10);
             border-radius: 14px;
-            padding: 10px;
+            padding: 8px;
             backdrop-filter: blur(8px);
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+            flex: 2 1 0;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .msc-video-card h3 {
+            margin-top: 0;
+            margin-bottom: 6px;
+            font-size: 1rem;
+            color: #dcdcdc;
+            flex-shrink: 0;
+        }
+
+        .msc-video-wrap {
+            position: relative;
+            width: 100%;
+            flex: 1;
+            min-height: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .msc-chart-header {
@@ -183,13 +225,13 @@
             justify-content: space-between;
             align-items: flex-start;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 8px;
+            gap: 6px;
+            margin-bottom: 6px;
         }
 
         .msc-chart-header h2 {
             margin: 0 0 4px;
-            font-size: 1.2rem;
+            font-size: 1.05rem;
         }
 
         .msc-chart-header .song-sub {
@@ -236,22 +278,6 @@
             border-radius: 16px;
         }
 
-        .msc-video-card h3 {
-            margin-top: 0;
-            margin-bottom: 6px;
-            font-size: 1rem;
-            color: #dcdcdc;
-        }
-
-        .msc-video-wrap {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%;
-            border-radius: 10px;
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
         .msc-video-wrap iframe {
             position: absolute;
             inset: 0;
@@ -261,12 +287,24 @@
         }
 
         @media (max-width: 1000px) {
-            body { overflow: auto; }
+            html, body { overflow: auto; }
 
-            .msc-main { height: auto; }
+            #musicianContent { height: auto; overflow: visible; }
+
+            .msc-main { flex: none; }
 
             .msc-layout {
                 grid-template-columns: 1fr;
+                grid-template-rows: none;
+            }
+
+            .msc-list-card,
+            .msc-video-card {
+                flex: none;
+            }
+
+            .msc-video-wrap {
+                min-height: 200px;
             }
 
             .msc-song-list {
@@ -446,7 +484,7 @@
 
             const lower = url.toLowerCase();
 
-            if (lower.endsWith(".pdf")) return { type: "pdf", url };
+            if (lower.endsWith(".pdf")) return { type: "pdf", url: `${url}#toolbar=0&view=FitH` };
             if (lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png")) {
                 return { type: "image", url };
             }
