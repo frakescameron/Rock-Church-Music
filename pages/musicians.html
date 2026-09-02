@@ -17,17 +17,6 @@
             overflow: hidden;
         }
 
-        #musicianContent {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .site-header {
-            flex-shrink: 0;
-        }
-
         .msc-main {
             max-width: 1800px;
             width: 100%;
@@ -36,8 +25,7 @@
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            flex: 1 1 auto;
-            min-height: 0;
+            overflow: hidden;
         }
 
         .msc-topbar {
@@ -289,9 +277,7 @@
         @media (max-width: 1000px) {
             html, body { overflow: auto; }
 
-            #musicianContent { height: auto; overflow: visible; }
-
-            .msc-main { flex: none; }
+            .msc-main { flex: none; overflow: visible; }
 
             .msc-layout {
                 grid-template-columns: 1fr;
@@ -398,6 +384,40 @@
         </main>
     </div>
 
+    <script>
+        // The header may be a normal in-flow element or a fixed/sticky bar
+        // from the site-wide stylesheet — we can't know which from here, so
+        // measure it for real instead of guessing a height in CSS.
+        (function () {
+            var header = document.querySelector('.site-header');
+            var main = document.querySelector('.msc-main');
+            if (!header || !main) return;
+
+            function fit() {
+                if (window.innerWidth <= 1000) {
+                    // Mobile layout stacks and scrolls on purpose — undo any inline sizing.
+                    main.style.height = '';
+                    main.style.marginTop = '';
+                    return;
+                }
+
+                var headerHeight = header.offsetHeight;
+                var position = window.getComputedStyle(header).position;
+                var outOfFlow = (position === 'fixed' || position === 'absolute');
+
+                // If the header is taken out of normal flow, main would otherwise
+                // start at the very top of the page and get covered by it.
+                main.style.marginTop = outOfFlow ? headerHeight + 'px' : '0px';
+                main.style.height = (window.innerHeight - headerHeight) + 'px';
+            }
+
+            fit();
+            window.addEventListener('resize', fit);
+            window.addEventListener('load', fit);
+            // Logo/webfonts can shift the header's height slightly after first paint.
+            setTimeout(fit, 300);
+        })();
+    </script>
 
     <script>
         /* =========================================================
@@ -489,10 +509,14 @@
                 return { type: "image", url };
             }
 
-            // Google Drive file link: .../file/d/FILE_ID/view  ->  .../file/d/FILE_ID/preview
+            // Google Drive file link: .../file/d/FILE_ID/view
+            // Drive's own "/preview" embed often renders as a small floating
+            // widget instead of filling the iframe, so route it through
+            // Google's document viewer instead, which scales to fit.
             const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
             if (driveMatch) {
-                return { type: "pdf", url: `https://drive.google.com/file/d/${driveMatch[1]}/preview` };
+                const directUrl = `https://drive.google.com/uc?export=download&id=${driveMatch[1]}`;
+                return { type: "pdf", url: `https://docs.google.com/viewer?url=${encodeURIComponent(directUrl)}&embedded=true` };
             }
 
             // Google Docs link: switch to /preview
