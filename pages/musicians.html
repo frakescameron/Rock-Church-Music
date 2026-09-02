@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Keeps this page out of Google's search results even though it's not linked in the nav -->
+    <meta name="robots" content="noindex, nofollow">
+    <title>Musician Resources | The Rock Church</title>
+    <link rel="stylesheet" href="../styles.css">
+
+    <style>
+        /* ---------- Page-specific styles (scoped to msc- / gate- classes) ---------- */
+
+        .gate-wrap {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .gate-card {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(0, 0, 0, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 24px;
+            padding: 36px 32px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .gate-card h1 {
+            margin: 0 0 10px;
+            font-size: 1.8rem;
+        }
+
+        .gate-card p {
+            color: #d6d6d6;
+            margin: 0 0 24px;
+            line-height: 1.6;
+        }
+
+        .gate-input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 14px 16px;
+            margin-bottom: 14px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .gate-input::placeholder {
+            color: #c9c9c9;
+        }
+
+        .gate-submit {
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .gate-error {
+            display: none;
+            margin-top: 14px;
+            color: #ff8a8a;
+            font-size: 0.92rem;
+        }
+
+        #musicianContent {
+            display: none;
+        }
+
+        .msc-main {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px 30px 60px;
+        }
+
+        .msc-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .msc-topbar a {
+            color: #e0d4ff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .msc-topbar a:hover {
+            text-decoration: underline;
+        }
+
+        .msc-hero {
+            background: rgba(0, 0, 0, 0.40);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 24px;
+            padding: 28px 32px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .msc-hero h1 {
+            margin: 0 0 10px;
+            font-size: 2.4rem;
+        }
+
+        .msc-hero p {
+            margin: 0;
+            color: #efefef;
+            line-height: 1.7;
+        }
+
+        .msc-layout {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .msc-left {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .msc-list-card {
+            background: rgba(0, 0, 0, 0.42);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+        }
+
+        .msc-list-card h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 1.6rem;
+        }
+
+        .msc-search {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px 14px;
+            margin: 12px 0 14px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.10);
+            color: white;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .msc-search::placeholder {
+            color: #cfcfcf;
+        }
+
+        .msc-song-list {
+            max-height: 420px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-right: 4px;
+        }
+
+        .msc-song {
+            width: 100%;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.06);
+            color: white;
+            border-radius: 14px;
+            padding: 12px 14px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .msc-song:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-1px);
+        }
+
+        .msc-song.active {
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+        }
+
+        .msc-song .song-name {
+            font-weight: 700;
+            font-size: 0.98rem;
+        }
+
+        .msc-song .song-sub {
+            font-size: 0.85rem;
+            color: #d8d8d8;
+        }
+
+        .msc-chart-card {
+            background: rgba(0, 0, 0, 0.40);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 24px;
+            padding: 26px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .msc-video-card {
+            background: rgba(0, 0, 0, 0.42);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 20px;
+            padding: 16px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .msc-chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .msc-chart-header h2 {
+            margin: 0 0 4px;
+            font-size: 1.6rem;
+        }
+
+        .msc-chart-header .song-sub {
+            color: #d6d6d6;
+            font-size: 0.95rem;
+        }
+
+        .msc-open-btn {
+            font-size: 0.85rem;
+            padding: 10px 16px;
+        }
+
+        .msc-chart-frame-wrap {
+            position: relative;
+            width: 100%;
+            min-height: 900px;
+            border-radius: 16px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .msc-chart-frame-wrap iframe,
+        .msc-chart-frame-wrap img {
+            width: 100%;
+            height: 100%;
+            min-height: 900px;
+            border: none;
+            display: block;
+            object-fit: contain;
+        }
+
+        .msc-chart-placeholder {
+            min-height: 900px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #cfcfcf;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+        }
+
+        .msc-video-card h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            color: #dcdcdc;
+        }
+
+        .msc-video-wrap {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            border-radius: 16px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .msc-video-wrap iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        @media (max-width: 1000px) {
+            .msc-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .msc-song-list {
+                max-height: 320px;
+            }
+
+            .msc-chart-frame-wrap,
+            .msc-chart-frame-wrap iframe,
+            .msc-chart-frame-wrap img,
+            .msc-chart-placeholder {
+                min-height: 600px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============== PASSWORD GATE ============== -->
+    <div class="gate-wrap" id="passwordGate">
+        <div class="gate-card">
+            <h1>Musician Resources</h1>
+            <p>This page is for The Rock Church worship team. Enter the password to view chord charts and songs.</p>
+
+            <input type="password" id="gatePasswordInput" class="gate-input" placeholder="Password">
+            <button type="button" id="gateSubmitBtn" class="library-button gate-submit">Enter</button>
+
+            <p class="gate-error" id="gateError">That password isn't right — try again.</p>
+        </div>
+    </div>
+
+    <!-- ============== MAIN CONTENT (hidden until password is correct) ============== -->
+    <div id="musicianContent">
+
+        <div class="site-header">
+            <div class="header-left">
+                <a href="../index.html" class="logo-link">
+                    <img src="../images/RockLogo.png" class="logo" alt="Rock Church Logo">
+                </a>
+                <div class="header-text">
+                    <p>The Rock Church — Musician Resources</p>
+                </div>
+            </div>
+        </div>
+
+        <main class="msc-main">
+
+            <div class="msc-topbar">
+                <a href="../index.html">&larr; Back to main site</a>
+            </div>
+
+            <section class="msc-hero">
+                <h1>Learn This Week's Music</h1>
+                <p>
+                    Pick a song from the list to pull up its lyrics &amp; chord chart, plus the reference
+                    video, so you can practice your part before rehearsal.
+                </p>
+            </section>
+
+            <section class="msc-layout">
+
+                <div class="msc-left">
+
+                    <div class="msc-list-card">
+                        <h2>Songs</h2>
+                        <input type="text" id="mscSearch" class="msc-search" placeholder="Search songs...">
+
+                        <div class="msc-song-list" id="mscSongList">
+                            <p>Loading songs...</p>
+                        </div>
+                    </div>
+
+                    <div class="msc-video-card">
+                        <h3>Reference Video</h3>
+                        <div class="msc-video-wrap">
+                            <iframe id="mscVideoPlayer" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="msc-chart-card">
+                    <div class="msc-chart-header">
+                        <div>
+                            <h2 id="mscChartTitle">Select a song</h2>
+                            <p class="song-sub" id="mscChartMeta"></p>
+                        </div>
+                        <a id="mscOpenChart" class="library-button msc-open-btn" href="#" target="_blank" style="display:none;">
+                            Open Full Size
+                        </a>
+                    </div>
+
+                    <div id="mscChartFrameWrap">
+                        <div class="msc-chart-placeholder">
+                            Choose a song on the left to view its lyrics &amp; chords here.
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+
+    <script>
+        /* =========================================================
+           PASSWORD GATE
+           - Not meant to be hack-proof, just keeps casual visitors out.
+           - Change SITE_PASSWORD to whatever you want to give the team.
+        ========================================================= */
+        const SITE_PASSWORD = "changeme123"; // <-- CHANGE THIS
+
+        const gate = document.getElementById("passwordGate");
+        const content = document.getElementById("musicianContent");
+        const gateInput = document.getElementById("gatePasswordInput");
+        const gateBtn = document.getElementById("gateSubmitBtn");
+        const gateError = document.getElementById("gateError");
+
+        function unlock() {
+            gate.style.display = "none";
+            content.style.display = "block";
+            sessionStorage.setItem("rc_musician_auth", "yes");
+            loadSongs();
+        }
+
+        function tryPassword() {
+            if (gateInput.value === SITE_PASSWORD) {
+                unlock();
+            } else {
+                gateError.style.display = "block";
+                gateInput.value = "";
+                gateInput.focus();
+            }
+        }
+
+        gateBtn.addEventListener("click", tryPassword);
+        gateInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") tryPassword();
+        });
+
+        // Skip the prompt if they already entered it earlier this browser session
+        if (sessionStorage.getItem("rc_musician_auth") === "yes") {
+            unlock();
+        }
+
+
+        /* =========================================================
+           SONG DATA
+           Same pattern as songlibrary.html / rockmusic.html: a Google
+           Sheet published to the web as CSV.
+
+           TODO: Replace SHEET_URL below with your real published CSV link.
+           File > Share > Publish to web > pick the tab > CSV.
+
+           Your sheet needs these column headers (any capitalization is fine):
+             title      - song title
+             artist     - artist/writer
+             key        - the key you play it in (optional)
+             youtubeId  - YouTube video ID for the reference video
+             chartUrl   - link to the chord chart (PDF, Google Doc,
+                          Google Drive file, or image). Works with:
+                            - a Google Drive "share" link
+                            - a direct link to a .pdf, .jpg, or .png
+                            - a Google Docs "share" link
+             active     - "no" to hide a song, blank/anything else to show it
+        ========================================================= */
+
+        const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRoeVrWExyazLI1ZRrHR35wAvmCQ1uEKj1dyRneeylYnZ7Yg2DyxzVGgLp_xdomZ00_6pMMCcZG7zip/pub?gid=0&single=true&output=csv";
+
+        let allSongs = [];
+
+        const songListEl = document.getElementById("mscSongList");
+        const searchEl = document.getElementById("mscSearch");
+        const chartTitleEl = document.getElementById("mscChartTitle");
+        const chartMetaEl = document.getElementById("mscChartMeta");
+        const chartFrameWrap = document.getElementById("mscChartFrameWrap");
+        const openChartLink = document.getElementById("mscOpenChart");
+        const videoPlayer = document.getElementById("mscVideoPlayer");
+
+        // Splits one CSV line on commas, but ignores commas that are inside
+        // "quoted fields" (Google Sheets quotes any value containing a comma).
+        function splitCSVLine(line) {
+            const result = [];
+            let current = "";
+            let inQuotes = false;
+
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+
+                if (char === '"') {
+                    if (inQuotes && line[i + 1] === '"') {
+                        current += '"';
+                        i++;
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                } else if (char === "," && !inQuotes) {
+                    result.push(current);
+                    current = "";
+                } else {
+                    current += char;
+                }
+            }
+
+            result.push(current);
+            return result;
+        }
+
+        function parseCSV(text) {
+            const rows = text.trim().split(/\r?\n/).map(splitCSVLine);
+
+            // Lowercased so "chartUrl", "ChartUrl", "CHARTURL" all match the same field.
+            const headers = rows.shift().map(h => h.trim().toLowerCase());
+
+            return rows.map(row => {
+                const item = {};
+                headers.forEach((header, index) => {
+                    item[header] = row[index] ? row[index].trim() : "";
+                });
+                return item;
+            });
+        }
+
+        // Turns a Google Drive/Docs share link into an embeddable preview link.
+        // Leaves direct file links (pdf/jpg/png) and anything else alone.
+        function toEmbeddableChartUrl(url) {
+            if (!url) return { type: "none", url: "" };
+
+            const lower = url.toLowerCase();
+
+            if (lower.endsWith(".pdf")) return { type: "pdf", url };
+            if (lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png")) {
+                return { type: "image", url };
+            }
+
+            // Google Drive file link: .../file/d/FILE_ID/view  ->  .../file/d/FILE_ID/preview
+            const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
+            if (driveMatch) {
+                return { type: "pdf", url: `https://drive.google.com/file/d/${driveMatch[1]}/preview` };
+            }
+
+            // Google Docs link: switch to /preview
+            if (lower.includes("docs.google.com")) {
+                const cleanUrl = url.split("?")[0].replace(/\/edit$/, "");
+                return { type: "pdf", url: `${cleanUrl}/preview` };
+            }
+
+            // Fallback: just try to embed whatever was given
+            return { type: "pdf", url };
+        }
+
+        function renderChart(song) {
+            chartTitleEl.textContent = song.title;
+            chartMetaEl.textContent = [song.artist, song.key ? `Key of ${song.key}` : ""]
+                .filter(Boolean).join(" • ");
+
+            const chart = toEmbeddableChartUrl(song.charturl);
+
+            if (chart.type === "none") {
+                chartFrameWrap.innerHTML = `<div class="msc-chart-placeholder">No chord chart linked for this song yet.</div>`;
+                openChartLink.style.display = "none";
+                return;
+            }
+
+            if (chart.type === "image") {
+                chartFrameWrap.innerHTML = `<img src="${chart.url}" alt="${song.title} chord chart">`;
+            } else {
+                chartFrameWrap.innerHTML = `<iframe src="${chart.url}"></iframe>`;
+            }
+
+            openChartLink.href = song.charturl;
+            openChartLink.style.display = "inline-block";
+        }
+
+        function playVideo(song) {
+            if (song.youtubeid) {
+                videoPlayer.src = `https://www.youtube.com/embed/${song.youtubeid}`;
+            } else {
+                videoPlayer.src = "";
+            }
+        }
+
+        function renderSongList(songs) {
+            songListEl.innerHTML = "";
+
+            const visible = songs.filter(song => song.active && song.active.toLowerCase() !== "no");
+
+            if (visible.length === 0) {
+                songListEl.innerHTML = "<p>No songs found.</p>";
+                return;
+            }
+
+            visible.forEach(song => {
+                const btn = document.createElement("button");
+                btn.className = "msc-song";
+                btn.innerHTML = `
+                    <span class="song-name">${song.title}</span>
+                    <span class="song-sub">${song.artist}</span>
+                `;
+
+                btn.addEventListener("click", () => {
+                    document.querySelectorAll(".msc-song").forEach(s => s.classList.remove("active"));
+                    btn.classList.add("active");
+                    renderChart(song);
+                    playVideo(song);
+                });
+
+                songListEl.appendChild(btn);
+            });
+        }
+
+        function loadSongs() {
+            if (!SHEET_URL || SHEET_URL.indexOf("PASTE_YOUR") === 0) {
+                songListEl.innerHTML = "<p>No song sheet connected yet.</p>";
+                return;
+            }
+
+            // Cache-busting param so browsers/CDNs don't serve a stale copy of the sheet.
+            const fetchUrl = SHEET_URL + (SHEET_URL.includes("?") ? "&" : "?") + "_=" + Date.now();
+
+            fetch(fetchUrl)
+                .then(res => res.text())
+                .then(text => {
+                    allSongs = parseCSV(text);
+                    console.log("Loaded songs from sheet:", allSongs);
+                    renderSongList(allSongs);
+                })
+                .catch(err => {
+                    console.error("Could not load the song sheet:", err);
+                    songListEl.innerHTML = "<p>Could not load songs. Check the SHEET_URL and try again.</p>";
+                });
+        }
+
+        searchEl.addEventListener("input", () => {
+            const q = searchEl.value.toLowerCase();
+            const filtered = allSongs.filter(song =>
+                song.title.toLowerCase().includes(q) ||
+                song.artist.toLowerCase().includes(q)
+            );
+            renderSongList(filtered);
+        });
+    </script>
+
+</body>
+</html>
