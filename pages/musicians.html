@@ -511,19 +511,24 @@
 
             const lower = url.toLowerCase();
 
-            if (lower.endsWith(".pdf")) return { type: "pdf", url: `${url}#toolbar=0&view=FitH` };
+            if (lower.endsWith(".pdf")) {
+                return { type: "pdf", url: `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(url)}#zoom=page-fit` };
+            }
             if (lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png")) {
                 return { type: "image", url };
             }
 
-            // Google Drive file link: .../file/d/FILE_ID/view -> /preview
-            // (/preview is the endpoint Google built specifically for
-            // embedding in an iframe; it was never the problem — the real
-            // bug was object-fit:contain shrinking the iframe itself, fixed
-            // above.)
+            // Google Drive file link: .../file/d/FILE_ID/view
+            // Google's own embedded preview (/preview) is a fixed-size "quick
+            // view" card — Google renders it that way on purpose and it can't
+            // be resized from outside, no matter what CSS or URL params are
+            // used. So instead of using Google's viewer at all, we point a
+            // real PDF viewer (Mozilla's PDF.js, which actually fills its
+            // container) at the raw file.
             const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
             if (driveMatch) {
-                return { type: "pdf", url: `https://drive.google.com/file/d/${driveMatch[1]}/preview` };
+                const directUrl = `https://drive.google.com/uc?export=download&id=${driveMatch[1]}`;
+                return { type: "pdf", url: `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(directUrl)}#zoom=page-fit` };
             }
 
             // Google Docs link: switch to /preview
