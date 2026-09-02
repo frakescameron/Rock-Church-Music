@@ -243,7 +243,14 @@
             background: rgba(255, 255, 255, 0.95);
         }
 
-        .msc-chart-frame-wrap iframe,
+        .msc-chart-frame-wrap iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            border: none;
+            display: block;
+        }
+
         .msc-chart-frame-wrap img {
             width: 100%;
             height: 100%;
@@ -509,18 +516,14 @@
                 return { type: "image", url };
             }
 
-            // Google Drive file link: .../file/d/FILE_ID/view
-            // Google's own hosted preview/viewer (whether /preview or
-            // docs.google.com/viewer) always renders as a small floating
-            // widget inside the iframe, no matter how big the iframe is —
-            // that's fixed on Google's end, not something CSS/URL params can
-            // override. So instead we point straight at the raw file and let
-            // the browser's own built-in PDF renderer display it, which
-            // actually fills the container. export=view (not export=download)
-            // asks Drive to serve it inline instead of forcing a download.
+            // Google Drive file link: .../file/d/FILE_ID/view -> /preview
+            // (/preview is the endpoint Google built specifically for
+            // embedding in an iframe; it was never the problem — the real
+            // bug was object-fit:contain shrinking the iframe itself, fixed
+            // above.)
             const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
             if (driveMatch) {
-                return { type: "pdf", url: `https://drive.google.com/uc?export=view&id=${driveMatch[1]}#toolbar=0&view=FitH` };
+                return { type: "pdf", url: `https://drive.google.com/file/d/${driveMatch[1]}/preview` };
             }
 
             // Google Docs link: switch to /preview
