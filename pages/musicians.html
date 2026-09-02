@@ -379,7 +379,7 @@
                         </a>
                     </div>
 
-                    <div id="mscChartFrameWrap">
+                    <div id="mscChartFrameWrap" class="msc-chart-frame-wrap">
                         <div class="msc-chart-placeholder">
                             Choose a song on the left to view its lyrics &amp; chords here.
                         </div>
@@ -512,23 +512,20 @@
             const lower = url.toLowerCase();
 
             if (lower.endsWith(".pdf")) {
-                return { type: "pdf", url: `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(url)}#zoom=page-fit` };
+                return { type: "pdf", url: `${url}#toolbar=0&view=FitH` };
             }
             if (lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png")) {
                 return { type: "image", url };
             }
 
-            // Google Drive file link: .../file/d/FILE_ID/view
-            // Google's own embedded preview (/preview) is a fixed-size "quick
-            // view" card — Google renders it that way on purpose and it can't
-            // be resized from outside, no matter what CSS or URL params are
-            // used. So instead of using Google's viewer at all, we point a
-            // real PDF viewer (Mozilla's PDF.js, which actually fills its
-            // container) at the raw file.
+            // Google Drive file link: .../file/d/FILE_ID/view -> /preview
+            // This is Google's own current, supported embed format. Direct
+            // hotlinks (uc?export=view/download) are blocked by Google now
+            // (CORS + their 2024 third-party-cookie changes), which is why
+            // that approach failed to load. /preview still works.
             const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
             if (driveMatch) {
-                const directUrl = `https://drive.google.com/uc?export=download&id=${driveMatch[1]}`;
-                return { type: "pdf", url: `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(directUrl)}#zoom=page-fit` };
+                return { type: "pdf", url: `https://drive.google.com/file/d/${driveMatch[1]}/preview` };
             }
 
             // Google Docs link: switch to /preview
