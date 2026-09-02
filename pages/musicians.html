@@ -510,13 +510,17 @@
             }
 
             // Google Drive file link: .../file/d/FILE_ID/view
-            // Drive's own "/preview" embed often renders as a small floating
-            // widget instead of filling the iframe, so route it through
-            // Google's document viewer instead, which scales to fit.
+            // Google's own hosted preview/viewer (whether /preview or
+            // docs.google.com/viewer) always renders as a small floating
+            // widget inside the iframe, no matter how big the iframe is —
+            // that's fixed on Google's end, not something CSS/URL params can
+            // override. So instead we point straight at the raw file and let
+            // the browser's own built-in PDF renderer display it, which
+            // actually fills the container. export=view (not export=download)
+            // asks Drive to serve it inline instead of forcing a download.
             const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
             if (driveMatch) {
-                const directUrl = `https://drive.google.com/uc?export=download&id=${driveMatch[1]}`;
-                return { type: "pdf", url: `https://docs.google.com/viewer?url=${encodeURIComponent(directUrl)}&embedded=true` };
+                return { type: "pdf", url: `https://drive.google.com/uc?export=view&id=${driveMatch[1]}#toolbar=0&view=FitH` };
             }
 
             // Google Docs link: switch to /preview
