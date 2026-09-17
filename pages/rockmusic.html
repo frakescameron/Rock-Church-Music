@@ -81,7 +81,7 @@
             <div class="youtube-wrap">
                 <iframe
                     id="serviceVideo"
-                    src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Fcherise.frakes%2Fvideos%2F1627490162313823%2F%3Fidorvanity%3D24716673740&show_text=false&width=560&t=0"
+                    src=""
                     title="Facebook video player"
                     frameborder="0"
                     allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
@@ -276,50 +276,27 @@
          * LAST WEEK'S SERVICE
          * Uses SERVICE_SHEET and Facebook
          */
-/*
-        const serviceVideo =
-            document.getElementById("serviceVideo");
 
+        const serviceVideo = document.getElementById("serviceVideo");
 
-        fetch(SERVICE_SHEET)
+fetch(SERVICE_SHEET)
+    .then(res => res.text())
+    .then(text => {
+        const rows = text.trim().split(/\r?\n/);
+        const facebookUrl = rows[1]?.trim();
 
-            .then(res => res.text())
+        if (facebookUrl) {
+            serviceVideo.src =
+                `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(facebookUrl)}&show_text=false`;
+        } else {
+            console.error("No Facebook video URL found in sheet");
+        }
+    })
+    .catch(err => {
+        console.error("Service video failed to load:", err);
+    });
 
-            .then(text => {
-
-                const rows =
-                    text.trim().split(/\r?\n/);
-
-
-                // Skip the header and get the first data row
-                const facebookUrl =
-                    rows[1]?.trim();
-
-
-                if (facebookUrl) {
-
-                    serviceVideo.src =
-                        `https://www.facebook.com/plugins/video.php?height=314&href=${encodeURIComponent(facebookUrl)}&show_text=false&width=560&t=0`;
-
-                } else {
-
-                    console.error(
-                        "No Facebook video URL found in sheet"
-                    );
-
-                }
-
-            })
-
-            .catch(err => {
-
-                console.error(
-                    "Service video failed to load:",
-                    err
-                );
-*/
-            });
-
+           
     </script>
 
 </body>
