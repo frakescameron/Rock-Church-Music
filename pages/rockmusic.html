@@ -283,13 +283,12 @@ fetch(SERVICE_SHEET)
     .then(res => res.text())
     .then(text => {
         const rows = text.trim().split(/\r?\n/);
-        const facebookUrl = rows[1]?.trim();
+        const facebookIframeUrl = rows[1]?.trim();
 
-        if (facebookUrl) {
-            serviceVideo.src =
-                `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(facebookUrl)}&show_text=false`;
+        if (facebookIframeUrl) {
+            serviceVideo.src = facebookIframeUrl;
         } else {
-            console.error("No Facebook video URL found in sheet");
+            console.error("No Facebook iframe URL found in sheet");
         }
     })
     .catch(err => {
